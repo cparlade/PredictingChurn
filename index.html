@@ -11771,9 +11771,28 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Predicting-Telco-Customer-Churn">Predicting Telco Customer Churn<a class="anchor-link" href="#Predicting-Telco-Customer-Churn">&#182;</a></h1><h2 id="By-Christian-Parlade">By Christian Parlade<a class="anchor-link" href="#By-Christian-Parlade">&#182;</a></h2><h4 id="Blog-post-can-be-found-at-link-below:">Blog post can be found at link below:<a class="anchor-link" href="#Blog-post-can-be-found-at-link-below:">&#182;</a></h4><h4 id="https://cparlade.github.io/PredictingChurn/"><a href="https://cparlade.github.io/PredictingChurn/">https://cparlade.github.io/PredictingChurn/</a><a class="anchor-link" href="#https://cparlade.github.io/PredictingChurn/">&#182;</a></h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Are you a business owner or manager looking to reduce customer churn and retain your valuable customers? Predictive analytics can help you identify customers who are at risk of churning and take proactive measures to keep them satisfied. In this blog post, we will explore how to use the Telco Customer Churn dataset to predict customer churn using various machine learning techniques. We will start by understanding the dataset and its features and then move on to data preprocessing and feature engineering. Finally, we will train and evaluate several machine learning models and choose the best one for predicting customer churn. By the end of this blog post, you will have a good understanding of how to predict customer churn and use this information to improve customer retention in your business.</p>
+<p>The problem of customer churn is a critical concern for businesses, especially those in the highly competitive telecommunications industry. Churn occurs when customers stop using a company's products or services, and it can have a significant impact on revenue and growth. Predicting customer churn has become increasingly important as companies look to retain their customers and reduce the costs associated with acquiring new ones.</p>
+<h2 id="Initial-Exploratory-Data-Analysis-of-the-Categorical-Variables">Initial Exploratory Data Analysis of the Categorical Variables<a class="anchor-link" href="#Initial-Exploratory-Data-Analysis-of-the-Categorical-Variables">&#182;</a></h2><p>Let's begin by loading the data, taking a closer look at what the data is like, and creating some visualizations to help us wrap our heads around what is in the data we are working with.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
@@ -11954,6 +11973,17 @@ memory usage: 1.1+ MB
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="EDA-Recap">EDA Recap<a class="anchor-link" href="#EDA-Recap">&#182;</a></h4><p>In the code snippets above, we are using the popular data science and machine learning libraries in Python to perform exploratory data analysis (EDA) on the telco customer churn dataset we introduced earlier. First, we read in the dataset using the Pandas library and checked the data types of the columns to ensure they have the correct types. We also converted any incorrect data types using the pd.to_numeric() function.</p>
+<p>Next, we plotted the distributions of the categorical variables by churn vs non-churn using the Matplotlib library. We grouped the data by the Churn variable and each of the categorical variables (gender, Partner, Dependents, PhoneService, MultipleLines, InternetService) and plotted them as bar charts.</p>
+<p>The EDA stage is a critical step in any machine learning project. It helps to identify patterns, trends, and relationships in the data, which can inform feature engineering, model selection, and hyperparameter tuning</p>
+<h4 id="EDA-Cont.">EDA Cont.<a class="anchor-link" href="#EDA-Cont.">&#182;</a></h4>
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -12275,6 +12305,16 @@ dtype: int64</pre>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After visualizing the data, we checked for missing values in our dataset using isnull().sum(). We found that the 'TotalCharges' column has missing values. Since we can't accurately fill in these values, we opted to drop the missing values altogether using dropna(inplace = True). Next, we removed the customerID column as it does not contribute to our analysis.</p>
+<p>To prepare our categorical variables for the models, we used pd.factorize() to convert them to numerical variables. This allows our models to understand and use the categorical data as a predictor. After factorizing each variable, we checked once again for missing values using isnull().sum(). This time, we found no missing values. Finally, we looked at the first few rows of our cleaned and prepared dataset using data.head().</p>
+<h2 id="EDA-of-the-numerical-variables-and-seeing-how-balanced-the-data-is">EDA of the numerical variables and seeing how balanced the data is<a class="anchor-link" href="#EDA-of-the-numerical-variables-and-seeing-how-balanced-the-data-is">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[136]:</div>
@@ -12383,6 +12423,17 @@ Name: Churn, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="EDA-Recap">EDA Recap<a class="anchor-link" href="#EDA-Recap">&#182;</a></h4><p>After cleaning our data by handling missing values and converting categorical variables to numerical variables, we now want to see how balanced our dataset is. We can do this by looking at the number of customers who churned and those who did not churn. We use the value_counts() method to count the number of occurrences of each unique value in the "Churn" column.</p>
+<p>Next, we create a list of numerical column names in our dataset, namely 'tenure', 'MonthlyCharges', and 'TotalCharges'. We loop through each column in the list and create a histogram to visualize the distribution of each variable. We set the number of bins to 20 and set the transparency of the histogram bars to 0.5. This allows us to see the frequency distribution of each numerical column and to check if there are any outliers. The title of each histogram indicates which column it represents, and the x and y labels show the value and frequency respectively.</p>
+<h4 id="Graphing-Correlation-of-the-variables">Graphing Correlation of the variables<a class="anchor-link" href="#Graphing-Correlation-of-the-variables">&#182;</a></h4><p>Now, let's take a look at how our features correlate with churn. This will help us garner an idea of which variables have an impact on churn and give us an idea if we should do feature selection.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[137]:</div>
@@ -12424,12 +12475,22 @@ Name: Churn, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This code above creates a correlation matrix to visualize the relationship between different variables and customer churn. The correlation matrix is created using the corr() method in Pandas, which computes the Pearson correlation coefficient between each pair of variables in the dataset. The resulting correlation coefficients are then plotted using the seaborn library's barplot() function, with the variable names on the x-axis and the correlation coefficients on the y-axis. The code sets the title of the plot to "Correlation of Variables with Churn" and rotates the x-axis labels by 90 degrees for readability. The resulting plot helps to identify which variables have a strong positive or negative correlation with customer churn, which can be useful in selecting the most predictive features for our machine learning models.</p>
+<p>Removing features, despite their lower correlation, ended up hurting the accuracy and results of the predictive model so I commented it out to show the work but not include it in the final model.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[139]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># dropping low correlation variables, this did not end up helping so I commented out to show work but not include in final result</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># dropping low correlation variables</span>
 <span class="c1"># data.drop(columns = [&#39;PhoneService&#39;, &#39;MultipleLines&#39;, &#39;InternetService&#39;],inplace = True)</span>
 </pre></div>
 
@@ -12443,7 +12504,7 @@ Name: Churn, dtype: int64
 <div class="prompt input_prompt">In&nbsp;[140]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># using</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Creating our X and Y datasets</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Churn&#39;</span><span class="p">])</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Churn&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
@@ -12452,6 +12513,17 @@ Name: Churn, dtype: int64
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Preprocessing-our-data">Preprocessing our data<a class="anchor-link" href="#Preprocessing-our-data">&#182;</a></h2><p>One interesting observation we made when we explored the distribution of our numerical features is that they do not follow a normal distribution. This is particularly important when it comes to feature scaling since some scaling methods assume that the data follows a normal distribution.</p>
+<p>Here, we chose to use MinMaxScaler instead of StandardScaler because MinMaxScaler scales the data to a range between 0 and 1 and is robust to outliers, whereas StandardScaler scales the data to have a mean of 0 and a standard deviation of 1. However, StandardScaler can be sensitive to outliers and may not perform well on non-Gaussian distributions.</p>
+<p>Since our data has a non-Gaussian distribution, using MinMaxScaler is a better choice as it preserves the range of the original data while ensuring that all the features are on the same scale, which is a requirement for many machine learning algorithms.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
@@ -12510,15 +12582,27 @@ Name: Churn, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Logistic-Regression">Logistic Regression<a class="anchor-link" href="#Logistic-Regression">&#182;</a></h2><p>After cleaning and preparing our dataset, we are now ready to build our predictive model. In this section of the code, we will be using several machine learning algorithms to predict customer churn. We will begin by splitting our data into training and testing sets, and then scale our features using the MinMaxScaler function from the sklearn library.</p>
+<p>After splitting our data and scaling the features, we will use the logistic regression algorithm to train our model. Logistic regression is a binary classification algorithm that works well for predicting whether a customer will churn or not. We will fit the model to our training data and make predictions on our testing data. The accuracy score of the model on the testing data will be printed.</p>
+<p>The result of running the logistic regression model is an accuracy score of 0.7919, which indicates that the model is able to accurately predict whether a customer will churn or not almost 80% of the time. However, this score may not be sufficient for some businesses, so we will also explore other machine learning algorithms to see if we can improve our results.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[143]:</div>
+<div class="prompt input_prompt">In&nbsp;[169]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># plotting variable weights</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
                  <span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12536,6 +12620,23 @@ Name: Churn, dtype: int64
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>AxesSubplot(0.125,0.125;0.775x0.755)
+gender             -0.023569
+SeniorCitizen       0.284246
+Partner            -0.143989
+Dependents         -0.303262
+tenure             -3.061982
+OnlineSecurity     -0.906823
+OnlineBackup        0.398652
+DeviceProtection   -0.052156
+TechSupport        -0.881293
+StreamingTV         0.380005
+StreamingMovies     0.395905
+Contract           -1.622676
+PaperlessBilling   -0.262446
+PaymentMethod      -0.386189
+MonthlyCharges      1.466253
+TotalCharges        1.313619
+dtype: float64
 </pre>
 </div>
 </div>
@@ -12605,6 +12706,17 @@ Name: Churn, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The above code is used to plot the variable weights of the logistic regression model. Variable weights indicate the importance of each feature in predicting the target variable, which is churn in this case.</p>
+<p>From the above weights, we can see that tenure, contract, and monthly charges are among the most significant features in predicting customer churn, while features such as gender, partner, and device protection have a lower impact on predicting customer churn.</p>
+<p>For example, a higher tenure (i.e., longer period of subscription) will have a negative impact on the prediction of customer churn, as evidenced by the large negative weight (-3.061982). Conversely, higher monthly charges will have a positive impact on the prediction of customer churn, as evidenced by the large positive weight (1.466253).</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[145]:</div>
@@ -12652,9 +12764,20 @@ Name: Churn, dtype: int64
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>After creating and evaluating a logistic regression model, we decided to experiment with a random forest classifier to see if we could improve our results. We split the data into training and testing sets using a test size of 0.25 and scaled the features using the MinMaxScaler.</p>
+<p>We experimented with different hyperparameters and found the best combination that resulted in the highest accuracy, precision, recall, and F1 score. We set the number of estimators to 1900, max features to "sqrt", and minimum samples split to 10. We then fit the model to our training data and made predictions on our test data.</p>
+<p>The results of the random forest classifier showed an accuracy of 0.790102, precision of 0.629738, recall of 0.471616, and an F1 score of 0.539326. These results indicate that the random forest classifier did not perform significantly better than the logistic regression model. However, it is worth noting that the performance of the random forest classifier can be improved by experimenting with different hyperparameters and tuning the model to fit the specific dataset.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[146]:</div>
+<div class="prompt input_prompt">In&nbsp;[171]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Get the feature importances from the random forest regressor</span>
@@ -12664,6 +12787,8 @@ Name: Churn, dtype: int64
 <span class="c1"># Print the feature ranking</span>
 <span class="n">weights</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">importances</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 <span class="n">weights</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12676,15 +12801,29 @@ Name: Churn, dtype: int64
 
 <div class="output_area">
 
-<div class="prompt output_prompt">Out[146]:</div>
+<div class="prompt"></div>
 
 
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x262400cc6d8&gt;</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>gender              0.018484
+SeniorCitizen       0.018836
+Partner             0.016333
+Dependents          0.015136
+tenure              0.163199
+OnlineSecurity      0.069812
+OnlineBackup        0.021462
+DeviceProtection    0.021298
+TechSupport         0.056933
+StreamingTV         0.020169
+StreamingMovies     0.020820
+Contract            0.126612
+PaperlessBilling    0.019635
+PaymentMethod       0.058768
+MonthlyCharges      0.180809
+TotalCharges        0.171695
+dtype: float64
+</pre>
 </div>
-
 </div>
 
 <div class="output_area">
@@ -12705,6 +12844,32 @@ Name: Churn, dtype: int64
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Results-and-Comparisons">Results and Comparisons<a class="anchor-link" href="#Results-and-Comparisons">&#182;</a></h2><p>After training the random forest classifier with various hyperparameters, we obtained an accuracy of 0.790102, precision of 0.629738, recall of 0.471616, and F1 score of 0.539326. In an attempt to understand the importance of each feature in our model, we plotted the feature importances as shown above.</p>
+<p>When comparing the importances of the features between the two models, we can see that they are quite different. For example, in the logistic regression model, the feature with the largest weight was tenure. Other features that had a strong association with customer churn in the logistic regression model included OnlineSecurity, TechSupport, and Contract.</p>
+<p>In contrast, the feature with the highest importance in the random forest model was MonthlyCharges, with an importance score of 0.180809. This indicates that customers who pay higher monthly charges are more likely to churn. Other features that were important in the random forest model included TotalCharges, tenure, and Contract.</p>
+<p>It is worth noting that the weights and importances of the features can vary between models and can be influenced by a range of factors, such as the size and quality of the data, the type of model used, and the hyperparameters chosen. Therefore, it is important to carefully consider the results of each model and interpret them in the context of the specific problem being addressed.</p>
+<h3 id="Challenges-and-obstacles-faced">Challenges and obstacles faced<a class="anchor-link" href="#Challenges-and-obstacles-faced">&#182;</a></h3><p>I faced a few challenges in this project. The first challenge was running into an issue and error when looking for missing values. At first, I missed that the TotalCharges column was labelled incorrectly and thus had to go back to find why I actually missing values.</p>
+<p>Another challenge I faced was feature selection. As you can see, I did not end up doing any feature selection for a couple of reasons. The first is that processing time was not an issue due to relatively small size of the dataset, thus dimensionality reduction was unnecessary. The second is that removing features actually decreased the predictive power of the model by up to .5%. Perhaps, with more time and an algorithmic approach, feature selection could have been more fruitful.</p>
+<p>The third challenge I faced was with plotting of the variables and getting them to look pretty. It was tough to ensure axes texts were not running over each other and stayed legible. Also, finding the code to graph with groups and implement correctly took a lot of research and nitpicking.</p>
+<p>The final challenge I faced was using Github pages itself. I have rarely used Github nor have I written a blog post. Getting the Github set up, the website functioning correctly, and iterating several attempts to get the webpage to appear decent, was an exercise in patience and discipline.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><p>In conclusion, we have explored two different models for predicting customer churn in a telecommunications company and compared the weights and importances of the features between them. While the results of the two models differ, they both provide valuable insights into the factors that are most strongly associated with customer churn.</p>
+<p>We were able to build two predictive models that performed reasonably well in predicting customer churn. Although the random forest model did not improve the accuracy score, it provided a better balance between precision and recall. Furthermore, the feature importances of the random forest model revealed important predictors of churn that were not as prominent in the logistic regression model. Overall, these results demonstrate the usefulness of machine learning algorithms in predicting customer churn and highlight the importance of exploring multiple models and feature importances to gain a more comprehensive understanding of the problem.</p>
+
+</div>
+</div>
 </div>
     </div>
   </div>
